@@ -366,42 +366,122 @@ h1, h2, h3, h4, h5, h6 {
     height: 100%;
 }
 
-/* Floating Social Media Bar over Background Video */
-.floating-social-bar {
-  position: absolute;
+/* Collapsible Floating Menu System */
+.collapsible-menu {
+  position: fixed;
   top: 50%;
-  right: 3rem;
   transform: translateY(-50%);
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--border-radius);
-  padding: 1.5rem 1rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.collapsible-menu-right {
+  right: 2rem;
+}
+
+.collapsible-menu-left {
+  left: 2rem;
+}
+
+.menu-toggle {
+  width: 56px;
+  height: 56px;
+  background: var(--accent);
+  border: none;
+  border-radius: 50%;
+  color: var(--bg);
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 4px 20px rgba(196, 154, 58, 0.4);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.menu-toggle:hover {
+  transform: scale(1.1);
+  background: var(--accent-light);
+  box-shadow: 0 6px 25px rgba(196, 154, 58, 0.6);
+}
+
+.menu-toggle.active {
+  transform: rotate(45deg) scale(1.1);
+}
+
+.toggle-icon {
+  width: 24px;
+  height: 24px;
   transition: var(--transition);
 }
 
-.floating-social-bar:hover {
-  background: rgba(0, 0, 0, 0.4);
-  border-color: rgba(196, 154, 58, 0.3);
-  box-shadow: 0 12px 40px rgba(196, 154, 58, 0.2);
+.toggle-text {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--bg);
+  transition: var(--transition);
 }
 
+.menu-content {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+  max-height: 80vh;
+  overflow-y: auto;
+  max-width: 320px;
+}
+
+.collapsible-menu-right .menu-content {
+  right: 4rem;
+  transform: translateX(20px);
+}
+
+.collapsible-menu-left .menu-content {
+  left: 4rem;
+  transform: translateX(-20px);
+}
+
+.collapsible-menu.open .menu-content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.collapsible-menu-right.open .menu-content {
+  transform: translateX(0);
+}
+
+.collapsible-menu-left.open .menu-content {
+  transform: translateX(0);
+}
+
+/* Social Media Menu Styles */
 .floating-social-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .floating-social-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   color: var(--text-secondary);
   text-decoration: none;
   border-radius: var(--border-radius-small);
@@ -421,75 +501,256 @@ h1, h2, h3, h4, h5, h6 {
 .floating-social-icon {
   width: 24px;
   height: 24px;
-/* Responsive Styles for Floating Social Bar */
-@media (max-width: 768px) {
-  .floating-social-bar {
-    right: 1.5rem;
-    padding: 1rem 0.75rem;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-
-  .floating-social-bar .floating-social-list {
-    gap: 1rem;
-  }
-
-  .floating-social-bar .floating-social-link {
-    width: 45px;
-    height: 45px;
-  }
-
-  .floating-social-bar .floating-social-icon {
-    width: 22px;
-    height: 22px;
-  }
-}
-
-@media (max-width: 480px) {
-  .floating-social-bar {
-    right: 1rem;
-    padding: 0.75rem 0.5rem;
-  }
-
-  .floating-social-bar .floating-social-link {
-    width: 40px;
-    height: 40px;
-  }
-
-  .floating-social-bar .floating-social-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .floating-social-bar .floating-social-list {
-    gap: 0.75rem;
-  }
-}
-
-@media (max-width: 320px) {
-  .floating-social-bar {
-    right: 0.5rem;
-    padding: 0.5rem 0.25rem;
-  }
-
-  .floating-social-bar .floating-social-link {
-    width: 36px;
-    height: 36px;
-  }
-
-  .floating-social-bar .floating-social-icon {
-    width: 18px;
-    height: 18px;
-  }
-}
-
   transition: var(--transition);
 }
 
 .floating-social-link:hover .floating-social-icon {
   transform: scale(1.1);
   color: var(--accent-light);
+}
+
+/* Services/Associates Menu Styles */
+.services-content {
+  min-width: 280px;
+}
+
+.services-header,
+.associates-header {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.associates-header {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.services-list,
+.associates-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.services-list li,
+.associates-list li {
+  margin-bottom: 0.5rem;
+}
+
+.services-link,
+.associates-link {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--border-radius-small);
+  transition: var(--transition);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.services-link:hover,
+.associates-link:hover {
+  color: var(--accent);
+  background: rgba(196, 154, 58, 0.1);
+  border-color: rgba(196, 154, 58, 0.3);
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(196, 154, 58, 0.2);
+}
+
+.services-link.non-clickable {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.services-link.non-clickable:hover {
+  transform: none;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.services-icon,
+.associates-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.services-link:hover .services-icon,
+.associates-link:hover .associates-icon {
+  transform: scale(1.1);
+  color: var(--accent-light);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .collapsible-menu-right {
+    right: 1.5rem;
+  }
+
+  .collapsible-menu-left {
+    left: 1.5rem;
+  }
+
+  .menu-toggle {
+    width: 48px;
+    height: 48px;
+  }
+
+  .toggle-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .menu-content {
+    padding: 1rem;
+    max-width: 280px;
+  }
+
+  .services-content {
+    min-width: 250px;
+  }
+
+  .services-link,
+  .associates-link {
+    font-size: 0.85rem;
+    padding: 0.6rem;
+  }
+
+  .services-icon,
+  .associates-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .collapsible-menu-right {
+    right: 1rem;
+  }
+
+  .collapsible-menu-left {
+    left: 1rem;
+  }
+
+  .menu-toggle {
+    width: 44px;
+    height: 44px;
+  }
+
+  .toggle-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .menu-content {
+    max-width: 260px;
+    padding: 0.75rem;
+  }
+
+  .services-content {
+    min-width: 230px;
+  }
+
+  .services-header,
+  .associates-header {
+    font-size: 0.9rem;
+  }
+
+  .services-link,
+  .associates-link {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+
+  .services-icon,
+  .associates-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 0.5rem;
+  }
+
+  .floating-social-link {
+    width: 44px;
+    height: 44px;
+  }
+
+  .floating-social-icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 320px) {
+  .collapsible-menu-right {
+    right: 0.5rem;
+  }
+
+  .collapsible-menu-left {
+    left: 0.5rem;
+  }
+
+  .menu-toggle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .toggle-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .menu-content {
+    max-width: 240px;
+    padding: 0.5rem;
+  }
+
+  .services-content {
+    min-width: 210px;
+  }
+
+  .services-header,
+  .associates-header {
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .services-link,
+  .associates-link {
+    font-size: 0.75rem;
+    padding: 0.4rem;
+  }
+
+  .services-icon,
+  .associates-icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 0.4rem;
+  }
+
+  .floating-social-link {
+    width: 40px;
+    height: 40px;
+  }
+
+  .floating-social-icon {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 /* Activities Section */

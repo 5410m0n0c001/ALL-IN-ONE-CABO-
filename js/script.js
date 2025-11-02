@@ -582,6 +582,178 @@
         }
     }
 
+    // Collapsible Menu Manager
+    class CollapsibleMenuManager {
+        constructor() {
+            this.menus = document.querySelectorAll('.collapsible-menu');
+            this.openMenus = new Set();
+            this.init();
+        }
+
+        init() {
+            if (!this.menus.length) return;
+            
+            this.bindEvents();
+            this.setupAccessibility();
+        }
+
+        bindEvents() {
+            // Toggle button click handlers
+            this.menus.forEach(menu => {
+                const toggleBtn = menu.querySelector('.menu-toggle');
+                if (toggleBtn) {
+                    toggleBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.toggleMenu(menu);
+                    });
+                }
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                const clickedOutside = Array.from(this.menus).every(menu =>
+                    !menu.contains(e.target)
+                );
+                
+                if (clickedOutside) {
+                    this.closeAllMenus();
+                }
+            });
+
+            // Close menu with escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    this.closeAllMenus();
+                }
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    this.closeAllMenus();
+                }
+            });
+        }
+
+        setupAccessibility() {
+            this.menus.forEach(menu => {
+                const toggleBtn = menu.querySelector('.menu-toggle');
+                const content = menu.querySelector('.menu-content');
+                
+                if (toggleBtn && content) {
+                    // Set initial ARIA state
+                    toggleBtn.setAttribute('aria-expanded', 'false');
+                    
+                    // Add keyboard navigation for menu items
+                    const menuLinks = content.querySelectorAll('a, button');
+                    menuLinks.forEach((link, index) => {
+                        link.addEventListener('keydown', (e) => {
+                            if (e.key === 'Tab') {
+                                if (e.shiftKey) {
+                                    // Shift+Tab - previous item
+                                    if (index === 0) {
+                                        e.preventDefault();
+                                        toggleBtn.focus();
+                                    }
+                                } else {
+                                    // Tab - next item
+                                    if (index === menuLinks.length - 1) {
+                                        e.preventDefault();
+                                        this.focusNextMenu();
+                                    }
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        }
+
+        toggleMenu(menu) {
+            const isOpen = menu.classList.contains('open');
+            
+            if (isOpen) {
+                this.closeMenu(menu);
+            } else {
+                this.openMenu(menu);
+            }
+        }
+
+        openMenu(menu) {
+            const toggleBtn = menu.querySelector('.menu-toggle');
+            
+            // Add open class
+            menu.classList.add('open');
+            toggleBtn.setAttribute('aria-expanded', 'true');
+            
+            // Track open menu
+            this.openMenus.add(menu);
+            
+            // Focus management
+            setTimeout(() => {
+                const firstLink = menu.querySelector('.menu-content a');
+                if (firstLink) {
+                    firstLink.focus();
+                }
+            }, 100);
+            
+            // Analytics
+            const menuType = menu.dataset.menu;
+            this.trackEvent('collapsible_menu_opened', menuType);
+        }
+
+        closeMenu(menu) {
+            const toggleBtn = menu.querySelector('.menu-toggle');
+            
+            // Remove open class
+            menu.classList.remove('open');
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            
+            // Remove from open menus set
+            this.openMenus.delete(menu);
+            
+            // Return focus to toggle button
+            toggleBtn.focus();
+            
+            // Analytics
+            const menuType = menu.dataset.menu;
+            this.trackEvent('collapsible_menu_closed', menuType);
+        }
+
+        closeAllMenus() {
+            if (this.openMenus.size === 0) return;
+            
+            const menusToClose = Array.from(this.openMenus);
+            menusToClose.forEach(menu => this.closeMenu(menu));
+        }
+
+        focusNextMenu() {
+            // Find the next menu after the current one
+            const allToggleBtns = Array.from(this.menus).map(menu =>
+                menu.querySelector('.menu-toggle')
+            );
+            
+            const currentIndex = allToggleBtns.findIndex(btn =>
+                btn.getAttribute('aria-expanded') === 'true'
+            );
+            
+            if (currentIndex >= 0) {
+                const nextIndex = (currentIndex + 1) % allToggleBtns.length;
+                allToggleBtns[nextIndex].focus();
+            }
+        }
+
+        trackEvent(action, menuType) {
+            // Analytics hook - replace with your analytics service
+            if (typeof gtag !== 'undefined') {
+                gtag('event', action, {
+                    event_category: 'collapsible_menu',
+                    event_label: menuType
+                });
+            }
+        }
+    }
+
     // Accessibility Manager
     class AccessibilityManager {
         constructor() {
@@ -600,8 +772,8 @@
                 // Handle Enter/Space for buttons that aren't native buttons
                 if (e.key === 'Enter' || e.key === ' ') {
                     const target = e.target;
-                    if (target.classList.contains('action-btn') && 
-                        !target.href && 
+                    if (target.classList.contains('action-btn') &&
+                        !target.href &&
                         !target.tagName.toLowerCase() === 'button') {
                         e.preventDefault();
                         target.click();
@@ -722,6 +894,7 @@
                 this.components.buttonHandler = new ButtonHandler();
                 this.components.videoManager = new VideoManager();
                 this.components.mobileSocialMenu = new MobileSocialMenu();
+                this.components.collapsibleMenuManager = new CollapsibleMenuManager();
                 this.components.accessibilityManager = new AccessibilityManager();
                 this.components.performanceManager = new PerformanceManager();
 
@@ -752,6 +925,7 @@
         ButtonHandler,
         VideoManager,
         MobileSocialMenu,
+        CollapsibleMenuManager,
         AccessibilityManager,
         PerformanceManager
     };
