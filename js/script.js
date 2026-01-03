@@ -3,7 +3,7 @@
  * Handles all interactive functionality including modals, notifications, and accessibility
  */
 
-(function() {
+(function () {
     'use strict';
 
     // Configuration
@@ -98,7 +98,7 @@
         show(message, type = 'info', duration = CONFIG.TOAST_DURATION) {
             const toastId = 'toast-' + Date.now();
             const toast = this.createToast(toastId, message, type);
-            
+
             this.container.appendChild(toast);
             this.toasts.set(toastId, toast);
 
@@ -122,7 +122,7 @@
             if (!toast) return;
 
             toast.classList.remove('show');
-            
+
             setTimeout(() => {
                 if (toast.parentNode) {
                     toast.parentNode.removeChild(toast);
@@ -135,7 +135,7 @@
             const toast = document.createElement('div');
             toast.className = `toast toast-${type}`;
             toast.id = id;
-            
+
             toast.innerHTML = `
                 <span class="toast-message">${message}</span>
                 <button class="toast-close" aria-label="Close notification">&times;</button>
@@ -242,7 +242,7 @@
             const focusableElements = this.modal.querySelectorAll(
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
             );
-            
+
             if (focusableElements.length === 0) return;
 
             const firstElement = focusableElements[0];
@@ -266,7 +266,7 @@
 
             this.focusTrap = focusHandler;
             document.addEventListener('keydown', focusHandler);
-            
+
             // Focus first element
             firstElement.focus();
         }
@@ -281,7 +281,7 @@
         async copyNumber() {
             const toastManager = new ToastManager();
             const success = await utils.copyToClipboard(CONFIG.PHONE_NUMBER);
-            
+
             if (success) {
                 toastManager.success('Phone number copied to clipboard!');
                 this.trackEvent('phone_number_copied', 'call_modal');
@@ -366,6 +366,12 @@
                     this.trackEvent('social_clicked', platform);
                 });
             });
+
+            // Share button listener
+            const shareBtn = document.querySelector('.share-btn');
+            if (shareBtn) {
+                shareBtn.addEventListener('click', () => this.handleShare());
+            }
         }
 
         async handleAddToContacts() {
@@ -375,7 +381,7 @@
                 link.href = CONFIG.VCARD_PATH;
                 link.download = 'allinonecabo.vcf';
                 link.style.display = 'none';
-                
+
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -394,6 +400,18 @@
             } catch (error) {
                 console.error('Error adding contact:', error);
                 this.toastManager.error('Failed to add contact. Please try again.');
+            }
+        }
+
+        async handleShare() {
+            try {
+                await navigator.share({
+                    title: 'ALL IN ONE CABO | Digital Business Card',
+                    text: 'Discover what ALL IN ONE CABO has to offer. View our digital business card and connect with us easily.',
+                    url: 'https://5410m0n0c001.github.io/ALL-IN-ONE-CABO-/'
+                });
+            } catch (error) {
+                console.error('Error sharing:', error);
             }
         }
 
@@ -494,7 +512,7 @@
         handleVideoError(video) {
             // Hide video and show poster image or fallback
             video.style.display = 'none';
-            
+
             // Create fallback element
             const fallback = document.createElement('div');
             fallback.className = 'video-fallback';
@@ -509,7 +527,7 @@
                 min-height: 200px;
             `;
             fallback.innerHTML = 'Video not available';
-            
+
             video.parentNode.insertBefore(fallback, video);
         }
     }
@@ -532,11 +550,11 @@
 
         bindEvents() {
             this.toggleBtn.addEventListener('click', () => this.toggle());
-            
+
             // Close when clicking outside
             document.addEventListener('click', (e) => {
-                if (this.isOpen && 
-                    !this.toggleBtn.contains(e.target) && 
+                if (this.isOpen &&
+                    !this.toggleBtn.contains(e.target) &&
                     !this.socialStrip.contains(e.target)) {
                     this.close();
                 }
@@ -592,7 +610,7 @@
 
         init() {
             if (!this.menus.length) return;
-            
+
             this.bindEvents();
             this.setupAccessibility();
         }
@@ -614,7 +632,7 @@
                 const clickedOutside = Array.from(this.menus).every(menu =>
                     !menu.contains(e.target)
                 );
-                
+
                 if (clickedOutside) {
                     this.closeAllMenus();
                 }
@@ -639,11 +657,11 @@
             this.menus.forEach(menu => {
                 const toggleBtn = menu.querySelector('.menu-toggle');
                 const content = menu.querySelector('.menu-content');
-                
+
                 if (toggleBtn && content) {
                     // Set initial ARIA state
                     toggleBtn.setAttribute('aria-expanded', 'false');
-                    
+
                     // Add keyboard navigation for menu items
                     const menuLinks = content.querySelectorAll('a, button');
                     menuLinks.forEach((link, index) => {
@@ -671,7 +689,7 @@
 
         toggleMenu(menu) {
             const isOpen = menu.classList.contains('open');
-            
+
             if (isOpen) {
                 this.closeMenu(menu);
             } else {
@@ -681,14 +699,14 @@
 
         openMenu(menu) {
             const toggleBtn = menu.querySelector('.menu-toggle');
-            
+
             // Add open class
             menu.classList.add('open');
             toggleBtn.setAttribute('aria-expanded', 'true');
-            
+
             // Track open menu
             this.openMenus.add(menu);
-            
+
             // Focus management
             setTimeout(() => {
                 const firstLink = menu.querySelector('.menu-content a');
@@ -696,7 +714,7 @@
                     firstLink.focus();
                 }
             }, 100);
-            
+
             // Analytics
             const menuType = menu.dataset.menu;
             this.trackEvent('collapsible_menu_opened', menuType);
@@ -704,17 +722,17 @@
 
         closeMenu(menu) {
             const toggleBtn = menu.querySelector('.menu-toggle');
-            
+
             // Remove open class
             menu.classList.remove('open');
             toggleBtn.setAttribute('aria-expanded', 'false');
-            
+
             // Remove from open menus set
             this.openMenus.delete(menu);
-            
+
             // Return focus to toggle button
             toggleBtn.focus();
-            
+
             // Analytics
             const menuType = menu.dataset.menu;
             this.trackEvent('collapsible_menu_closed', menuType);
@@ -722,7 +740,7 @@
 
         closeAllMenus() {
             if (this.openMenus.size === 0) return;
-            
+
             const menusToClose = Array.from(this.openMenus);
             menusToClose.forEach(menu => this.closeMenu(menu));
         }
@@ -732,11 +750,11 @@
             const allToggleBtns = Array.from(this.menus).map(menu =>
                 menu.querySelector('.menu-toggle')
             );
-            
+
             const currentIndex = allToggleBtns.findIndex(btn =>
                 btn.getAttribute('aria-expanded') === 'true'
             );
-            
+
             if (currentIndex >= 0) {
                 const nextIndex = (currentIndex + 1) % allToggleBtns.length;
                 allToggleBtns[nextIndex].focus();
@@ -899,7 +917,7 @@
                 this.components.performanceManager = new PerformanceManager();
 
                 console.log('All In One Cabo Digital Business Card initialized successfully');
-                
+
                 // Show welcome message for development
                 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                     setTimeout(() => {
