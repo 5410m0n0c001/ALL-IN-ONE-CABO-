@@ -386,11 +386,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .menu-toggle {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   background: var(--accent);
   border: none;
-  border-radius: 50%;
+  border-radius: 16px;
   color: var(--bg);
   cursor: pointer;
   z-index: 1001;
@@ -403,18 +403,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .menu-toggle:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
   background: var(--accent-light);
   box-shadow: 0 6px 25px rgba(196, 154, 58, 0.6);
 }
 
 .menu-toggle.active {
-  transform: rotate(45deg) scale(1.1);
+  transform: rotate(45deg) scale(1.05);
 }
 
 .toggle-icon {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   transition: var(--transition);
 }
 
