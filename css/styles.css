@@ -400,6 +400,35 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   pointer-events: auto;
+  position: relative;
+}
+
+.collapsible-menu-left .menu-toggle::after {
+  content: 'Servicios';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+.collapsible-menu-right .menu-toggle::after {
+  content: 'Redes';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  white-space: nowrap;
 }
 
 .menu-toggle:hover {

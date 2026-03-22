@@ -1,6 +1,6 @@
 /**
- * All In One Cabo - Guided Tour
- * Uses driver.js to walk users through the digital business card features
+ * All In One Cabo - Enhanced Guided Tour
+ * Digital Business Card Feature Walkthrough
  */
 
 const startTour = () => {
@@ -12,26 +12,47 @@ const startTour = () => {
             { 
                 element: '.hero', 
                 popover: { 
-                    title: '¡Bienvenido!', 
-                    description: 'Te damos la bienvenida a la tarjeta digital de All In One Cabo. Aquí encontrarás todo lo que necesitas para tu aventura en Los Cabos.', 
+                    title: '¡Bienvenida Personalizada!', 
+                    description: 'Esta portada se adapta totalmente a tu marca. Podemos colocar tu logotipo (incluso animado), nombre y mucho más. Todo es personalizable, incluyendo vídeos y álbumes de fotos.', 
                     side: "bottom", 
                     align: 'start' 
                 } 
             },
             { 
-                element: '.hero-title', 
+                element: '.collapsible-menu-left', 
                 popover: { 
-                    title: 'Experiencias Premium', 
-                    description: 'Descubre nuestros servicios de yates, tours y actividades exclusivas.', 
-                    side: "bottom", 
+                    title: 'Nuestros Servicios (Our Services)', 
+                    description: 'Pulsa este botón para navegar por todas las opciones de tu sitio web o permítenos crear uno nuevo para potenciar tu marca. Aquí tus clientes pueden buscar servicios específicos como Yates, Pesca, Restaurantes y más.', 
+                    side: "right", 
                     align: 'start' 
-                } 
+                },
+                onActivated: () => {
+                    const menu = document.querySelector('.collapsible-menu-left');
+                    if (window.AllInOneCabo && window.AllInOneCabo.app.components.collapsibleMenuManager) {
+                        window.AllInOneCabo.app.components.collapsibleMenuManager.openMenu(menu);
+                    }
+                }
+            },
+            { 
+                element: '.collapsible-menu-right', 
+                popover: { 
+                    title: 'Vínculo Social', 
+                    description: 'Conecta todas tus redes sociales en un solo lugar. Al desplegarse, tus clientes pueden elegir su plataforma favorita para seguirte: Facebook, Instagram, TikTok y más.', 
+                    side: "left", 
+                    align: 'start' 
+                },
+                onActivated: () => {
+                    const menu = document.querySelector('.collapsible-menu-right');
+                    if (window.AllInOneCabo && window.AllInOneCabo.app.components.collapsibleMenuManager) {
+                        window.AllInOneCabo.app.components.collapsibleMenuManager.openMenu(menu);
+                    }
+                }
             },
             { 
                 element: '.call-btn', 
                 popover: { 
-                    title: 'Llámanos', 
-                    description: 'Contáctanos directamente con un solo clic para consultas inmediatas.', 
+                    title: 'Llamadas Directas', 
+                    description: 'Comunícate con nosotros al instante con un solo clic. Ideal para reservas rápidas.', 
                     side: "top", 
                     align: 'start' 
                 } 
@@ -40,7 +61,7 @@ const startTour = () => {
                 element: '.whatsapp-btn', 
                 popover: { 
                     title: 'WhatsApp', 
-                    description: '¿Prefieres chatear? Escríbenos por WhatsApp para disponibilidad rápida.', 
+                    description: '¿Prefieres chatear? El botón de WhatsApp permite una comunicación directa y fluida desde cualquier dispositivo.', 
                     side: "top", 
                     align: 'start' 
                 } 
@@ -48,8 +69,8 @@ const startTour = () => {
             { 
                 element: '.location-btn', 
                 popover: { 
-                    title: 'Ubicación', 
-                    description: 'Encuentra nuestra oficina fácilmente en Google Maps.', 
+                    title: 'Ubicación Exacta', 
+                    description: 'Abre nuestra ubicación en Google Maps para que tus clientes sepan exactamente dónde encontrarte.', 
                     side: "top", 
                     align: 'start' 
                 } 
@@ -57,8 +78,8 @@ const startTour = () => {
             { 
                 element: '.contacts-btn', 
                 popover: { 
-                    title: 'Guardar Contacto', 
-                    description: 'Descarga nuestra información de contacto directamente a tu agenda telefónica.', 
+                    title: 'Guardar en la Agenda', 
+                    description: 'Permite que tus clientes descarguen tu tarjeta de contacto directamente a su agenda telefónica sin escribir nada.', 
                     side: "top", 
                     align: 'start' 
                 } 
@@ -66,35 +87,17 @@ const startTour = () => {
             { 
                 element: '.share-btn', 
                 popover: { 
-                    title: 'Compartir', 
-                    description: 'Recomienda nuestros servicios compartiendo esta tarjeta con amigos y familiares.', 
+                    title: 'Compartir (El botón más poderoso)', 
+                    description: 'Este botón permite compartir tu tarjeta a CUALQUIER aplicación instalada (WhatsApp, Facebook, Instagram, Telegram, Email). Incluye un mensaje precargado para que el receptor sepa de qué trata inmediatamente.', 
                     side: "top", 
-                    align: 'start' 
-                } 
-            },
-            { 
-                element: '.collapsible-menu-left', 
-                popover: { 
-                    title: 'Servicios Exclusivos', 
-                    description: 'Explora nuestro menú lateral para ver todos los servicios: Yates, Transporte, Pesca y más.', 
-                    side: "right", 
-                    align: 'start' 
-                } 
-            },
-            { 
-                element: '.collapsible-menu-right', 
-                popover: { 
-                    title: 'Redes Sociales', 
-                    description: 'Síguenos en nuestras plataformas sociales para ver fotos y videos recientes.', 
-                    side: "left", 
                     align: 'start' 
                 } 
             },
             { 
                 element: '.footer', 
                 popover: { 
-                    title: 'Información Adicional', 
-                    description: 'Aquí encontrarás enlaces directos a nuestro sitio web principal y datos del propietario.', 
+                    title: 'Sin Fecha de Vencimiento', 
+                    description: 'Como nota final, recuerda que esta tarjeta no tiene vigencia y permanece en línea por tiempo indefinido. ¡Tu negocio siempre estará a un clic de distancia!', 
                     side: "top", 
                     align: 'start' 
                 } 
@@ -103,19 +106,24 @@ const startTour = () => {
         nextBtnText: 'Siguiente',
         prevBtnText: 'Anterior',
         doneBtnText: 'Finalizar',
+        onDestroyed: () => {
+            // Close any open menus when tour ends
+            if (window.AllInOneCabo && window.AllInOneCabo.app.components.collapsibleMenuManager) {
+                window.AllInOneCabo.app.components.collapsibleMenuManager.closeAllMenus();
+            }
+        }
     });
 
     driverObj.drive();
 };
 
-// Start tour after a short delay or based on a specific event
+// Start tour after a short delay
 window.addEventListener('load', () => {
-    // Check if user has seen the tour before (optional)
     if (!localStorage.getItem('tour_seen')) {
-        setTimeout(startTour, 2000);
+        setTimeout(startTour, 3000);
         localStorage.setItem('tour_seen', 'true');
     }
 });
 
-// Expose startTour for manual trigger if needed
+// Expose startTour for manual trigger
 window.startTour = startTour;
