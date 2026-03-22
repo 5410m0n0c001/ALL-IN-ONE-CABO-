@@ -4,27 +4,32 @@
  */
 
 const startTour = () => {
+    // Check if device is mobile to optimize popover placement avoids overlap
+    const isMobile = window.innerWidth <= 768;
     const driver = window.driver.js.driver;
 
     const driverObj = driver({
         showProgress: true,
+        animate: true,
+        // Add padding around highlighted elements to prevent overlaps
+        stagePadding: isMobile ? 15 : 10,
         steps: [
             { 
                 element: '.hero', 
                 popover: { 
                     title: '¡Bienvenida Personalizada!', 
-                    description: 'Esta portada se adapta totalmente a tu marca. Podemos colocar tu logotipo (incluso animado), nombre y mucho más. Todo es personalizable, incluyendo vídeos y álbumes de fotos.', 
+                    description: 'Esta portada se adapta totalmente a tu marca. Podemos colocar tu logotipo (incluso animado), nombre y mucho más.', 
                     side: "bottom", 
-                    align: 'start' 
+                    align: 'center' 
                 } 
             },
             { 
                 element: '.collapsible-menu-left', 
                 popover: { 
                     title: 'Nuestros Servicios (Our Services)', 
-                    description: 'Pulsa este botón para navegar por todas las opciones de tu sitio web o permítenos crear uno nuevo para potenciar tu marca. Aquí tus clientes pueden buscar servicios específicos como Yates, Pesca, Restaurantes y más.', 
-                    side: "right", 
-                    align: 'start' 
+                    description: 'Navega por todas las opciones de tu sitio web. Aquí tus clientes pueden buscar servicios como Yates, Pesca, Restaurantes y más.', 
+                    side: isMobile ? "bottom" : "right", 
+                    align: 'center' 
                 },
                 onActivated: () => {
                     const menu = document.querySelector('.collapsible-menu-left');
@@ -37,9 +42,9 @@ const startTour = () => {
                 element: '.collapsible-menu-right', 
                 popover: { 
                     title: 'Vínculo Social', 
-                    description: 'Conecta todas tus redes sociales en un solo lugar. Al desplegarse, tus clientes pueden elegir su plataforma favorita para seguirte: Facebook, Instagram, TikTok y más.', 
-                    side: "left", 
-                    align: 'start' 
+                    description: 'Facebook, Instagram, TikTok y más en un solo lugar.', 
+                    side: isMobile ? "bottom" : "left", 
+                    align: 'center' 
                 },
                 onActivated: () => {
                     const menu = document.querySelector('.collapsible-menu-right');
@@ -52,54 +57,72 @@ const startTour = () => {
                 element: '.call-btn', 
                 popover: { 
                     title: 'Llamadas Directas', 
-                    description: 'Comunícate con nosotros al instante con un solo clic. Ideal para reservas rápidas.', 
-                    side: "top", 
-                    align: 'start' 
+                    description: 'Comunícate directamente a nuestro teléfono personal con un solo clic.', 
+                    side: isMobile ? "bottom" : "top", 
+                    align: 'center' 
                 } 
             },
             { 
-                element: '.whatsapp-btn', 
+                element: '.office-btn', 
+                popover: { 
+                    title: 'Línea de Oficina', 
+                    description: 'Llama directamente a los teléfonos de la oficina en horario laboral.', 
+                    side: isMobile ? "bottom" : "top", 
+                    align: 'center' 
+                } 
+            },
+            { 
+                element: '.whatsapp-btn',  
                 popover: { 
                     title: 'WhatsApp', 
-                    description: '¿Prefieres chatear? El botón de WhatsApp permite una comunicación directa y fluida desde cualquier dispositivo.', 
-                    side: "top", 
-                    align: 'start' 
+                    description: '¿Prefieres chatear? Comunicación directa y fluida desde cualquier dispositivo.', 
+                    side: isMobile ? "bottom" : "top", 
+                    align: 'center' 
                 } 
             },
             { 
                 element: '.location-btn', 
                 popover: { 
                     title: 'Ubicación Exacta', 
-                    description: 'Abre nuestra ubicación en Google Maps para que tus clientes sepan exactamente dónde encontrarte.', 
-                    side: "top", 
-                    align: 'start' 
+                    description: 'Abre nuestra ubicación en Google Maps para que sepan exactamente dónde encontrarte.', 
+                    side: isMobile ? "bottom" : "top", 
+                    align: 'center' 
                 } 
             },
             { 
                 element: '.contacts-btn', 
                 popover: { 
                     title: 'Guardar en la Agenda', 
-                    description: 'Permite que tus clientes descarguen tu tarjeta de contacto directamente a su agenda telefónica sin escribir nada.', 
-                    side: "top", 
-                    align: 'start' 
+                    description: 'Descarga de tu tarjeta de contacto directo a la agenda de tus clientes.', 
+                    side: isMobile ? "bottom" : "top", 
+                    align: 'center' 
+                } 
+            },
+            { 
+                element: '.email-btn', 
+                popover: { 
+                    title: 'Correo Electrónico', 
+                    description: 'Manda un correo con un mensaje predefinido con solo tocar este icono.', 
+                    side: isMobile ? "bottom" : "top", 
+                    align: 'center' 
                 } 
             },
             { 
                 element: '.share-btn', 
                 popover: { 
                     title: 'Compartir (El botón más poderoso)', 
-                    description: 'Este botón permite compartir tu tarjeta a CUALQUIER aplicación instalada (WhatsApp, Facebook, Instagram, Telegram, Email). Incluye un mensaje precargado para que el receptor sepa de qué trata inmediatamente.', 
-                    side: "top", 
-                    align: 'start' 
+                    description: 'Uno de los botones más poderosos de nuestra tarjeta, porque permite compartir a CUALQUIER aplicación instalada en tu dispositivo y no te restringe solo a una.', 
+                    side: isMobile ? "bottom" : "top", 
+                    align: 'center' 
                 } 
             },
             { 
                 element: '.footer', 
                 popover: { 
                     title: 'Sin Fecha de Vencimiento', 
-                    description: 'Como nota final, recuerda que esta tarjeta no tiene vigencia y permanece en línea por tiempo indefinido. ¡Tu negocio siempre estará a un clic de distancia!', 
+                    description: 'Recuerda que esta tarjeta no tiene vigencia y permanece en línea por tiempo indefinido.', 
                     side: "top", 
-                    align: 'start' 
+                    align: 'center' 
                 } 
             }
         ],
@@ -119,10 +142,7 @@ const startTour = () => {
 
 // Start tour after a short delay
 window.addEventListener('load', () => {
-    if (!localStorage.getItem('tour_seen')) {
-        setTimeout(startTour, 3000);
-        localStorage.setItem('tour_seen', 'true');
-    }
+    setTimeout(startTour, 3000);
 });
 
 // Expose startTour for manual trigger
