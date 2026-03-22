@@ -1320,18 +1320,19 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .action-btn {
-    min-height: 70px;
+    min-height: 140px;
     padding: 0.75rem;
   }
 
   .btn-icon {
-    width: 20px;
-    height: 20px;
-    margin-bottom: 0.25rem;
+    width: 110px;
+    height: 110px;
+    margin-bottom: 0.5rem;
   }
 
   .btn-text {
-    font-size: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
   }
 
   .hero-title {
