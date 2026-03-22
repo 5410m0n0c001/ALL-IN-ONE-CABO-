@@ -14,6 +14,8 @@ const startTour = () => {
             next: 'Siguiente', prev: 'Anterior', done: 'Finalizar',
             heroTitle: '¡Bienvenida Personalizada!',
             heroDesc: 'Esta portada se adapta totalmente a tu marca. Podemos colocar tu logotipo (incluso animado), nombre y mucho más.',
+            langTitle: 'Idioma / Language',
+            langDesc: 'Cambia el idioma de toda la tarjeta y sus menús flotantes al instante con un solo menú.',
             servTitle: 'Nuestros Servicios',
             servDesc: 'Pulsa este botón para navegar a las diversas secciones del sitio web. En caso de que no cuentes con un sitio, nosotros podemos crearte uno para potencializar tus funnels de conversión.',
             socTitle: 'Vínculo Social',
@@ -39,6 +41,8 @@ const startTour = () => {
             next: 'Next', prev: 'Previous', done: 'Finish',
             heroTitle: 'Personalized Welcome!',
             heroDesc: 'This cover entirely adapts to your brand. We can display your logo (even animated), name, and much more.',
+            langTitle: 'Language Switch',
+            langDesc: 'Change the language of the entire digital card and its menus instantly with a single click.',
             servTitle: 'Our Services',
             servDesc: 'Tap this button to navigate through various website sections. If you don\'t have a website, we can create one to boost your conversion funnels.',
             socTitle: 'Social Media',
@@ -76,6 +80,10 @@ const startTour = () => {
             { 
                 element: '.hero', 
                 popover: { title: dic.heroTitle, description: dic.heroDesc, side: "bottom", align: 'center' } 
+            },
+            {
+                element: '.lang-toggle',
+                popover: { title: dic.langTitle, description: dic.langDesc, side: "left", align: 'center' }
             },
             { 
                 element: '.collapsible-menu-left', 
