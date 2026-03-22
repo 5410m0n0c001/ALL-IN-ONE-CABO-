@@ -888,6 +888,47 @@
         }
     }
 
+    // Preloader Manager
+    class PreloaderManager {
+        constructor() {
+            this.preloader = document.getElementById('preloader');
+            this.skipBtn = document.getElementById('skipPreloader');
+            this.video = document.getElementById('preloaderVideo');
+            this.hidden = false;
+            this.init();
+        }
+
+        init() {
+            if (!this.preloader) return;
+            
+            // Allow skip button to hide preloader manually
+            if (this.skipBtn) {
+                this.skipBtn.addEventListener('click', () => this.hide());
+            }
+
+            // Hide automatically when video ends
+            if (this.video) {
+                this.video.addEventListener('ended', () => this.hide());
+            }
+
+            // Fallback: forcefully hide after 6.5 seconds so user is never stuck
+            setTimeout(() => this.hide(), 6500);
+        }
+
+        hide() {
+            if (this.hidden) return;
+            this.hidden = true;
+            this.preloader.classList.add('hidden');
+            
+            // Trigger tour presentation
+            setTimeout(() => {
+                if (typeof window.startTour === 'function') {
+                    window.startTour();
+                }
+            }, 800);
+        }
+    }
+
     // Main Application
     class App {
         constructor() {
@@ -908,6 +949,7 @@
             try {
                 // Initialize all components
                 this.components.toastManager = new ToastManager();
+                this.components.preloaderManager = new PreloaderManager();
                 this.components.modalManager = new ModalManager();
                 this.components.buttonHandler = new ButtonHandler();
                 this.components.videoManager = new VideoManager();

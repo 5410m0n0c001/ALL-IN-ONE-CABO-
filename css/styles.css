@@ -238,6 +238,89 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
 }
 
+/* Preloader */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10000;
+  background-color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+.preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.preloader-video {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 0;
+}
+.skip-btn {
+  position: absolute;
+  bottom: 50px;
+  padding: 12px 36px;
+  background: rgba(196, 154, 58, 0.2);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: var(--border-radius);
+  font-family: var(--font-primary);
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: var(--transition);
+  z-index: 1;
+}
+.skip-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(196, 154, 58, 0.4);
+}
+
+/* Language Toggle */
+.lang-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: var(--transition);
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: 1rem;
+}
+.lang-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(196, 154, 58, 0.2);
+}
+
+/* Action Buttons */
 .action-btn:hover .btn-text {
   opacity: 1;
   visibility: visible;
@@ -409,13 +492,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .collapsible-menu-left .menu-toggle::after {
-  content: 'Servicios';
+  content: attr(data-label);
   position: absolute;
-  bottom: -35px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-10px);
-  font-size: 0.875rem;
-  font-weight: 500;
+  bottom: -25px;
+  right: 50%;
+  transform: translateX(50%) translateY(10px);
+  background: rgba(255, 255, 255, 0.1);
   color: var(--text-primary);
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
@@ -433,13 +515,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .collapsible-menu-right .menu-toggle::after {
-  content: 'Redes';
+  content: attr(data-label);
   position: absolute;
-  bottom: -35px;
+  bottom: -25px;
   left: 50%;
-  transform: translateX(-50%) translateY(-10px);
-  font-size: 0.875rem;
-  font-weight: 500;
+  transform: translateX(-50%) translateY(10px);
+  background: rgba(255, 255, 255, 0.1);
   color: var(--text-primary);
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
