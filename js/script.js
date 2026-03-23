@@ -920,10 +920,41 @@
             this.hidden = true;
             this.preloader.classList.add('hidden');
             
-            // Trigger tour presentation
+            // Show language selection modal instead of starting tour directly
             setTimeout(() => {
-                if (typeof window.startTour === 'function') {
-                    window.startTour();
+                const langModal = document.getElementById('langSelectModal');
+                if (langModal) {
+                    langModal.classList.add('show');
+                    langModal.setAttribute('aria-hidden', 'false');
+                    
+                    const startTourWithLang = (lang) => {
+                        langModal.classList.remove('show');
+                        langModal.setAttribute('aria-hidden', 'true');
+                        
+                        if (window.langManager) {
+                            window.langManager.currentLang = lang;
+                            localStorage.setItem('site_lang', lang);
+                            window.langManager.applyLanguage();
+                        } else {
+                            localStorage.setItem('site_lang', lang);
+                        }
+                        
+                        if (typeof window.startTour === 'function') {
+                            setTimeout(() => {
+                                window.startTour();
+                            }, 300);
+                        }
+                    };
+
+                    const btnEs = document.getElementById('btnLangEs');
+                    const btnEn = document.getElementById('btnLangEn');
+                    if (btnEs) btnEs.onclick = () => startTourWithLang('es');
+                    if (btnEn) btnEn.onclick = () => startTourWithLang('en');
+                } else {
+                    // Fallback if modal not successfully injected or found
+                    if (typeof window.startTour === 'function') {
+                        window.startTour();
+                    }
                 }
             }, 800);
         }
