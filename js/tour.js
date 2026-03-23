@@ -34,6 +34,8 @@ const startTour = () => {
             emailDesc: 'Manda un correo con un mensaje predefinido con solo tocar este icono.',
             shareTitle: 'Compartir (El botón más poderoso)',
             shareDesc: 'Uno de los botones más poderosos de nuestra tarjeta, porque permite compartir a CUALQUIER aplicación instalada en tu dispositivo y no te restringe solo a una.',
+            cardTitle: 'Adquirir mi tarjeta',
+            cardDesc: 'Si desea adquirir su propia tarjeta digital u otro servicio, puede hacerlo pulsando este icono que le llevará a nuestro sitio web oficial.',
             footerTitle: 'Sin Fecha de Vencimiento',
             footerDesc: 'Recuerda que esta tarjeta no tiene vigencia y permanece en línea por tiempo indefinido.'
         },
@@ -61,6 +63,8 @@ const startTour = () => {
             emailDesc: 'Send a pre-written email by just tapping this icon.',
             shareTitle: 'Share (The Most Powerful Tool)',
             shareDesc: 'One of the most powerful buttons on our card because it lets you share through ANY app installed on your device, not restricted to just one.',
+            cardTitle: 'Get My Card',
+            cardDesc: 'If you would like to acquire your own digital card or other services, you can do so by tapping this icon, which will take you to our official website.',
             footerTitle: 'No Expiration Date',
             footerDesc: 'Remember that this card never expires and stays online indefinitely.'
         }
@@ -112,6 +116,7 @@ const startTour = () => {
             { element: '.contacts-btn', popover: { title: dic.saveTitle, description: dic.saveDesc, side: isMobile ? "bottom" : "top", align: 'center' } },
             { element: '.email-btn', popover: { title: dic.emailTitle, description: dic.emailDesc, side: isMobile ? "bottom" : "top", align: 'center' } },
             { element: '.share-btn', popover: { title: dic.shareTitle, description: dic.shareDesc, side: isMobile ? "bottom" : "top", align: 'center' } },
+            { element: '.card-btn', popover: { title: dic.cardTitle, description: dic.cardDesc, side: isMobile ? "bottom" : "top", align: 'center' } },
             { element: '.footer', popover: { title: dic.footerTitle, description: dic.footerDesc, side: "top", align: 'center' } }
         ],
         onDestroyed: () => {

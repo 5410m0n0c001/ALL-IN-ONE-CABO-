@@ -1835,3 +1835,36 @@ h1, h2, h3, h4, h5, h6 {
     animation: none !important;
   }
 }
+
+/* Highlight for New Card Button */
+.card-btn {
+  z-index: 5;
+}
+
+.card-btn .btn-icon {
+  width: 110px !important;
+  height: 110px !important;
+  filter: drop-shadow(0 0 10px rgba(196, 154, 58, 0.6));
+  animation: pulseCard 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pulseCard {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(196, 154, 58, 0.4));
+  }
+  50% {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 20px rgba(196, 154, 58, 0.8));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(196, 154, 58, 0.4));
+  }
+}
+
+.card-btn:hover .btn-icon {
+  animation-play-state: paused;
+  transform: scale(1.2) !important;
+  filter: drop-shadow(0 0 25px rgba(196, 154, 58, 1)) !important;
+}
